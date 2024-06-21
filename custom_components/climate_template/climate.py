@@ -491,14 +491,15 @@ class TemplateClimate(TemplateEntity, ClimateEntity, RestoreEntity):
                 )
             )
         ):
-            self._attr_supported_features |= ClimateEntityFeature.TARGET_TEMPERATURE
-            if not (
+            if (
                 self._action_temperature
                 or self._template_target_temperature
                 or self._presets_features
                 & ClimateEntityPresetFeature.TARGET_TEMPERATURE
             ):
-                _LOGGER.info(
+                self._attr_supported_features |= ClimateEntityFeature.TARGET_TEMPERATURE
+            else:
+                _LOGGER.warning(
                     "Entity '%s' has hvac mode auto, heat or cool configured, but there is neither '%s' action, '%s' template nor preset_features.target_temperature configued.",
                     self._attr_name,
                     CONF_SET_TEMPERATURE_ACTION,
@@ -527,13 +528,14 @@ class TemplateClimate(TemplateEntity, ClimateEntity, RestoreEntity):
                 self._presets_features ^= ClimateEntityPresetFeature.TARGET_TEMPERATURE
 
         if HVACMode.DRY in self._attr_hvac_modes:
-            self._attr_supported_features |= ClimateEntityFeature.TARGET_HUMIDITY
-            if not (
+            if (
                 self._action_humidity
                 or self._template_target_humidity
                 or self._presets_features & ClimateEntityPresetFeature.TARGET_HUMIDITY
             ):
-                _LOGGER.info(
+                self._attr_supported_features |= ClimateEntityFeature.TARGET_HUMIDITY
+            else:
+                _LOGGER.warning(
                     "Entity '%s' has hvac mode dry configured, but there is neither '%s' action, '%s' template nor preset_features.humidity configured.",
                     self._attr_name,
                     CONF_SET_HUMIDITY_ACTION,
