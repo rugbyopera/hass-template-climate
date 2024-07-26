@@ -1490,6 +1490,30 @@ class TemplateClimate(TemplateEntity, ClimateEntity, RestoreEntity):
         return self._attr_hvac_mode
 
     @property
+    def target_temperature(self) -> float | None:
+        """Return the temperature we try to reach."""
+        if self._attr_hvac_mode == HVACMode.HEAT_COOL:
+            return None
+        else:
+            return self._attr_target_temperature
+
+    @property
+    def target_temperature_low(self) -> float | None:
+        """Return the temperature we try to reach."""
+        if self._attr_hvac_mode == HVACMode.HEAT_COOL:
+            return self._attr_target_temperature_low
+        else:
+            return None
+
+    @property
+    def target_temperature_high(self) -> float | None:
+        """Return the temperature we try to reach."""
+        if self._attr_hvac_mode == HVACMode.HEAT_COOL:
+            return self._attr_target_temperature_high
+        else:
+            return None
+
+    @property
     def extra_state_attributes(self):
         """Platform specific attributes."""
         return {
