@@ -1005,7 +1005,7 @@ class TemplateClimate(TemplateEntity, ClimateEntity, RestoreEntity):
                         self._attr_min_temp,
                     )
                     return None
-            elif format == "curent_humidity":
+            elif format == "current_humidity":
                 try:
                     value = round(value)
                 except ValueError:
